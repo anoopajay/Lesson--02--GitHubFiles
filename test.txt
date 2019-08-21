@@ -1,5 +1,5 @@
 #Base Ubuntu
-FROM ubuntu:16.04
+FROM ubuntu:latest
 
 #Updating system Packages
 RUN apt-get update && apt-get clean
@@ -10,15 +10,8 @@ RUN apt-get install -y software-properties-common python-software-properties &&\
 	apt-get update &&\
 	apt-get install -y php7.2-curl php7.2-gd php7.2-json php7.2-mbstring php7.2-intl php7.2-mysql php7.2-xml php7.2-zip php -v
 
-# Install OpenSSL
-RUN yum install -y gcc openssl-devel bzip2-devel &&\
-	wget https://www.python.org/ftp/python/2.7.14/Python-2.7.14.tgz &&\
-	tar xzf Python-2.7.14.tgz -C /usr/src &&\
-	cd /usr/src/Python-2.7.14/ &&\
-	./configure --enable-optimizations &&\
-	yum install -y make &&\
-	make altinstall &&\
-	/usr/local/bin/python2.7 -V;
+#Installing Python
+RUN apt-get update -y && apt-get install --no-install-recommends -y -q build-essential python2.7 python2.7-dev python-pip
 
 # Install PIP
 RUN curl "https://bootstrap.pypa.io/get-pip.py" -o "get-pip.py" &&\
